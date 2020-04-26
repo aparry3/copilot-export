@@ -1,0 +1,8 @@
+<div class='week-header'>
+    {{name}}: Week {{index + 1}}
+</div>
+<div class='week-content'>
+    {% for day in days %}
+        {{day.render()}}
+    {% endfor %}
+</div>

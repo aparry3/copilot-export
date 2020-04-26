@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class='content'>
+    {% for week in weeks %}
+        <div class='week'>{{week.render()}}</div>
+    {% endfor %}
+</div>
+{% endblock %}

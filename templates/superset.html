@@ -1,0 +1,23 @@
+<div class="workout-element">
+    <div class='superset'>
+        {{header.render()}}
+        <div class='superset-exercises'>
+            {% for exercise in exercises %}
+                {{exercise.render()}}
+            {% endfor %}
+        </div>
+        {% if notes is not none %}
+            <div class="superset-notes">
+                <div class="superset-notes-title">Notes:</div>
+                <div class="superset-notes-text">{{notes}}</div>
+            </div>
+        {% endif %}
+        {% if details|length > 0 %}
+            <div class="superset-details">
+                {% for detail in details %}
+                    <span class="detail">{{detail[0]}}: {{detail[1]}}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>

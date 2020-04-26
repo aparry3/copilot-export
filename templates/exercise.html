@@ -1,0 +1,23 @@
+<div class="workout-element">
+    <div class='exercise'>
+        <div class="exercise-name">
+            <span>-</span>
+            <div class="exercise-name-text">
+                <span class="name">{{name}}</span>
+                {% if notes is not none %}
+                <div class="exercise-notes">
+                    <span class="exercise-notes-title">Notes:</span>
+                    <span class="exercise-notes-text">
+                        {{notes}}
+                    </span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% if details|length > 0 %}
+            <div class="exercise-details">
+                {{renderDetails()}}
+            </div>
+        {% endif %}
+    </div>
+</div>

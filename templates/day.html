@@ -1,0 +1,12 @@
+<div class='day'>
+    <div class='day-header'>
+        <div class="day-title">
+            <span>{{name}}</span>
+        </div>
+    </div>
+    <div class='day-content'>
+        {% for block in blocks %}
+            {{block.render()}}
+        {% endfor %}
+    </div>
+</div>

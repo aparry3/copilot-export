@@ -9,6 +9,9 @@ verify_ssl = true
 jinja2 = "*"
 weasyprint = "*"
 pymongo = {extras = ["srv"],version = "*"}
+cffi = "*"
+pathlib = "*"
+pango = "*"
 
 [requires]
 python_version = "3.7"

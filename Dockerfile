@@ -1,15 +1,30 @@
 FROM amazonlinux
+
 COPY . /app
 
-RUN yum install gcc libffi-devel python-devel openssl-devel -y
+EXPOSE 5000
+
+RUN yum install -y redhat-rpm-config \
+  python-devel \
+  python-pip \
+  python-setuptools \
+  python-wheel \
+  python-cffi \
+  libffi-devel \
+  cairo \
+  pango \
+  gdk-pixbuf2
 
 # Install Python Setuptools
-RUN yum install -y python3 \
-    python3-dev \
-    python \
-    python-dev \
-    python3-pip \
-    python-setuptools
+RUN yum install -y python3
 
 WORKDIR /app
-RUN python3 -m pip install -r requirements.txt
+
+ENV VIRTUAL_ENV="/opt/venv"
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+ENV FLASK_APP=copilot.py
+
+RUN pip install -r requirements.txt
+
+CMD ["python3", "-m", "flask", "run"]

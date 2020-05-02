@@ -2,8 +2,6 @@ FROM amazonlinux
 
 COPY . /app
 
-EXPOSE 5000
-
 RUN yum install -y redhat-rpm-config \
   python-devel \
   python-pip \
@@ -23,8 +21,7 @@ WORKDIR /app
 ENV VIRTUAL_ENV="/opt/venv"
 RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-ENV FLASK_APP=copilot.py
 
 RUN pip install -r requirements.txt
 
-CMD ["python3", "-m", "flask", "run"]
+CMD ["python3", "-m", "flask", "run", "-h", "0.0.0.0"]

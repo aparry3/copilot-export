@@ -1,23 +1,26 @@
+from datetime import datetime
 import os
 
 import boto3
 from weasyprint import HTML, CSS
 from weasyprint.fonts import FontConfiguration
 
+from config import app
 from connection import db
 from generators import Program as ProgramGenerator
 from models import Program
 
 BASE_PATH = os.path.dirname(__file__)
-s3 = boto3.resource('s3')
+s3 = boto3.resource('s3',
+    aws_access_key_id=app.config.get('AWS_ACCESS_KEY_ID'),
+    aws_secret_access_key=app.config.get('AWS_SECRET_ACCESS_KEY')
+)
 
-S3_BASE_URL = 'https://{bucket}.s3.amazonaws.com/{key}'
 
 def generate_pdf(program_id):
     bucket = s3.Bucket('copilot-fitness')
-    print(bucket.name)
-    db_program = db.programs.find_one({'_id': program_id})
 
+    db_program = db.programs.find_one({'_id': program_id})
     program = Program(**db_program)
 
     p = ProgramGenerator(program)
@@ -28,7 +31,15 @@ def generate_pdf(program_id):
 
     obj = bucket.put_object(Body=pdf, Key=f'exports/{program_id}.pdf', ACL='public-read')
 
-    print(obj)
-    return {
-        'url': 's3 url'
+    export_doc = {
+        'url': app.config.get('S3_BASE_URL').format(bucket=obj.bucket_name, key= obj.key),
+        'uploaded': datetime.now()
     }
+
+    db_program = db.programs.find_one_and_update(
+        {'_id': program_id},
+        {'$set': {'export': export_doc}},
+        {'new': True}
+    )
+
+    return export_doc

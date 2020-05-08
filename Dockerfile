@@ -24,4 +24,4 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 RUN pip install -r requirements.txt
 
-CMD ["python3", "-m", "flask", "run", "-h", "0.0.0.0"]
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "wsgi"]

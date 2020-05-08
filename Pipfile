@@ -11,6 +11,7 @@ weasyprint = "*"
 pymongo = {extras = ["srv"],version = "*"}
 flask = "*"
 boto3 = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"

@@ -9,5 +9,5 @@ class Exercise(ContentGenerator):
             'type': exercise.type,
             'name': exercise.name,
             'notes': exercise.notes,
-            'details': []
+            'details': [(k, v) for k,v in exercise.details.items()] if exercise.details is not None else []
         }

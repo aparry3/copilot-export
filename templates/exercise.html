@@ -16,7 +16,9 @@
         </div>
         {% if details|length > 0 %}
             <div class="exercise-details">
-                {{renderDetails()}}
+                {% for detail in details %}
+                    <span class="detail">{{detail[0]}}: {{detail[1]}}</span>
+                {% endfor %}
             </div>
         {% endif %}
     </div>
